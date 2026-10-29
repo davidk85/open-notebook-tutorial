@@ -1,0 +1,5 @@
+# Eigener Schlüssel und Daten bleiben auf deinem Rechner.
+.env
+open-notebook-data/
+backup/
+*.tar.gz

@@ -1,0 +1,41 @@
+# Open Notebook lokal starten (Anleitung in README.md):
+#   echo "OPEN_NOTEBOOK_ENCRYPTION_KEY=$(openssl rand -hex 32)" | tee .env
+#   docker compose up -d   →  http://localhost:8502
+# Angepasst gegenüber der offiziellen Datei: feste Version, Ports nur auf diesem Rechner,
+# Schlüssel aus .env, Ollama auf deinem Rechner erreichbar.
+services:
+  surrealdb:
+    image: surrealdb/surrealdb:v2.7.0
+    command: ["start", "--log", "info", "--user", "${SURREAL_USER:-root}", "--pass", "${SURREAL_PASSWORD:-root}", "rocksdb:/mydata/mydatabase.db"]
+    user: root
+    restart: unless-stopped
+    volumes:
+      - ./open-notebook-data/surreal:/mydata
+
+  open_notebook:
+    image: lfnovo/open_notebook:${OPEN_NOTEBOOK_VERSION:-1.15.0}
+    restart: unless-stopped
+    ports:
+      # Nur auf diesem Rechner erreichbar. Für andere Geräte erst ein Passwort setzen (Folge 7).
+      - "127.0.0.1:8502:8502"   # Oberfläche
+      - "127.0.0.1:5055:5055"   # REST-API
+    environment:
+      # Verschlüsselt die API-Schlüssel, die du in Open Notebook speicherst. Steht in .env.
+      - OPEN_NOTEBOOK_ENCRYPTION_KEY=${OPEN_NOTEBOOK_ENCRYPTION_KEY:?Bitte zuerst .env mit OPEN_NOTEBOOK_ENCRYPTION_KEY anlegen}
+      - SURREAL_URL=ws://surrealdb:8000/rpc
+      - SURREAL_USER=${SURREAL_USER:-root}
+      - SURREAL_PASSWORD=${SURREAL_PASSWORD:-root}
+      - SURREAL_NAMESPACE=open_notebook
+      - SURREAL_DATABASE=open_notebook
+      # Kleine lokale Modelle: Hintergrundaufgaben nacheinander, damit der Chat nicht warten muss.
+      - OPEN_NOTEBOOK_WORKER_MAX_TASKS=1
+      # Folge 7: Passwort für die Oberfläche (dann die Raute davor entfernen).
+      # - OPEN_NOTEBOOK_PASSWORD=${OPEN_NOTEBOOK_PASSWORD}
+    # Ollama auf deinem Rechner ist in Open Notebook unter http://host.docker.internal:11434
+    # erreichbar (Docker Desktop kann das von selbst, unter Linux braucht es diese Zeile).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./open-notebook-data/notebook:/app/data
+    depends_on:
+      - surrealdb
