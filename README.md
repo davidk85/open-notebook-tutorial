@@ -8,6 +8,12 @@ Open Notebook ist eine selbst gehostete Alternative zu Googles NotebookLM. Jede 
 
 | Folge | Thema | Level |
 |---|---|---|
+| 1 | [Open Notebook installieren](folge-01-installation/) | Einsteiger |
+| 2 | [KI lokal anbinden mit Ollama](folge-02-ollama/) | Einsteiger |
+| 3 | [Dein erstes Notebook mit Quellen](folge-03-quellen/) | Einsteiger |
+| 4 | [Mit deinen Quellen chatten](folge-04-chat/) | Einsteiger |
+| 5 | [Suchen und eigene Transformationen](folge-05-suchen/) | Einsteiger |
+| 6 | [Podcast aus deinen Quellen](folge-06-podcast/) | Einsteiger |
 
 ## Open Notebook starten
 
@@ -29,6 +35,6 @@ Stoppen mit `docker compose down`. Deine Notebooks bleiben im Ordner `open-noteb
 ## Hinweise
 
 - Open Notebook ist nur auf deinem Rechner erreichbar (Ports an 127.0.0.1 gebunden) und hat ohne Passwort keinen Login.
-  Bevor andere Geräte darauf zugreifen, ein Passwort setzen (Folge 7).
+  Bevor andere Geräte darauf zugreifen, in `.env` ein Passwort setzen: `OPEN_NOTEBOOK_PASSWORD=…` (Folge 7).
 - Mit Ollama bleiben Quellen und Fragen auf deinem Rechner. Cloud-Anbieter wie OpenAI bekommen die Inhalte deiner Quellen.
 - Beispieldaten in den Videos sind erfunden, zum Beispiel die „Kaffeerösterei Morgenrot“.

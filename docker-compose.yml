@@ -29,8 +29,8 @@ services:
       - SURREAL_DATABASE=open_notebook
       # Kleine lokale Modelle: Hintergrundaufgaben nacheinander, damit der Chat nicht warten muss.
       - OPEN_NOTEBOOK_WORKER_MAX_TASKS=1
-      # Folge 7: Passwort für die Oberfläche (dann die Raute davor entfernen).
-      # - OPEN_NOTEBOOK_PASSWORD=${OPEN_NOTEBOOK_PASSWORD}
+      # Passwort für Oberfläche und API aus .env (Folge 7). Leer heißt: kein Login.
+      - OPEN_NOTEBOOK_PASSWORD=${OPEN_NOTEBOOK_PASSWORD:-}
     # Ollama auf deinem Rechner ist in Open Notebook unter http://host.docker.internal:11434
     # erreichbar (Docker Desktop kann das von selbst, unter Linux braucht es diese Zeile).
     extra_hosts:
