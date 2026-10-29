@@ -14,6 +14,7 @@ Open Notebook ist eine selbst gehostete Alternative zu Googles NotebookLM. Jede 
 | 4 | [Mit deinen Quellen chatten](folge-04-chat/) | Einsteiger |
 | 5 | [Suchen und eigene Transformationen](folge-05-suchen/) | Einsteiger |
 | 6 | [Podcast aus deinen Quellen](folge-06-podcast/) | Einsteiger |
+| 7 | [Passwort, Backup und Update](folge-07-absichern/) | Einsteiger |
 
 ## Open Notebook starten
 
